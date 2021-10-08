@@ -1,0 +1,9 @@
+<app-product-list
+  title="Products"
+  [$products]="$products"
+  (buttonClick)="addToShoppingCart($event)"
+  buttonText="Add to shopping cart">
+</app-product-list>
+<span routerLink="/products/add" class="material-icons">
+  add
+</span>

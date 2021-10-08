@@ -1,0 +1,27 @@
+<div class="wrapper">
+  <h1>{{title}}</h1>
+  <div class="views">
+    <span class="material-icons" appTooltip="list view" [ngClass]="{'selected':!gridView}" (click)="gridView=false">
+      view_list
+    </span>
+    <span class="material-icons" appTooltip="grid view" [ngClass]="{'selected':gridView}" (click)="gridView=true">
+      view_module
+    </span>
+  </div>
+  <ul [class.grid]="gridView" *ngIf="$products | async as products; else loading">
+    <li *ngFor="let product of products">
+      <h2 routerLink="/product/{{product.id}}">{{product.name | uppercase}}</h2>
+      <img [src]="product.image" [alt]="product.name">
+      <p>
+        ({{product.createdAt | date:'dd/MM/yy'}}) -
+        {{product.description.length > 150 ? (product.description | slice:0: 150) + '...' : product.description}}
+      </p>
+      <div class="price">{{product.price | euroCurrency}}</div>
+      <div>
+        <button class="button" #buttonElement
+                (click)="buttonClick.emit({product: product, element: buttonElement})">{{buttonText}}</button>
+      </div>
+    </li>
+  </ul>
+</div>
+<ng-template #loading><img class="loading" src="assets/spinner.svg" alt="loading"></ng-template>
